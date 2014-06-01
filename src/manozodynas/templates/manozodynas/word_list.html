@@ -1,0 +1,28 @@
+{% extends "manozodynas/base.html" %}
+
+{% block title %}Žodžių Sąrašas{% endblock %}
+
+{% block content %}
+
+{% for word in object_list %}
+    <div id="word_view">
+        <a href="">{{word.word}}</a>
+    </div>
+{% endfor %}
+
+{% if page_obj.has_previous %}
+    <a href="{% url 'word_list' page_obj.previous_page_number %}">
+        Ankstesnis
+    </a>
+{% endif %}
+
+Puslapis {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}.
+
+
+{% if page_obj.has_next %}
+    <a href="{% url 'word_list' page_obj.next_page_number %}">
+       Sekantis 
+    </a>
+{% endif %}
+
+{% endblock %}
