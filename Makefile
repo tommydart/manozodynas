@@ -11,7 +11,6 @@ prepare_env:
 
 run:
 	bin/django migrate manozodynas
-	bin/django runserver
-
+	bin/django runserver 77.241.198.205:8000
 test:
 	bin/django test
