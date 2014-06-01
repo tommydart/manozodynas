@@ -27,11 +27,31 @@ def login_view(request):
 class CreateWord(CreateView):
     model = Word
     fields = ['word']
+    success_url = '/'
 
 class WordList(ListView):
     model = Word
     paginate_by = 10
 
-class WordView(ListView):
+class WordView(CreateView):
     model = Translation
+    template_name = 'manozodynas/translation_list.html'    
+    fields = ['translation']
+    success_url = '/words'
 
+    def form_valid(self, form):
+        word_id = self.kwargs['id']
+        word = Word.objects.get(id = word_id)
+        form.instance.word = word
+        return super(WordView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(WordView, self).get_context_data(**kwargs)
+        word_id = self.kwargs['id']
+        word = Word.objects.get(id = word_id)
+        try:
+            context['object_list'] = Translation.objects.filter(word = word.id)
+        except:
+            context['object_list'] = None
+        context['word'] = word
+        return context

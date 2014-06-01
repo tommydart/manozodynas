@@ -1,5 +1,19 @@
 {% extends 'manozodynas/base.html' %}
 
 {% block content %}
-Žodis: {{word.word}}
+<b>Žodis:</b> {{word.word}}
+
+<br/><b>Vertimai:</b><br/>
+{% for translation in object_list %}
+<div>
+    {{translation.translation}}
+</div>
+{% endfor %}
+
+<br/><b>Naujas vertimas:</b><br/>
+<form id="NewTranslation" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="Submit" value="Naujas vertimas">
+</form>
 {% endblock %}
