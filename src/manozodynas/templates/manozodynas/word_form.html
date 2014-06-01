@@ -1,0 +1,10 @@
+{% extends 'manozodynas/base.html' %}
+
+{% block content %}
+<div><b>Naujas žodis:</b><br/>
+    <Form id = "NewWord" action ="" method = "POST">{% csrf_token %}
+        {{form.as_p}}
+    <input type = "Submit" value = "Sukurti">
+    </Form>
+</div>
+{% endblock %}
