@@ -4,8 +4,8 @@ from django.core.urlresolvers import reverse
 from .forms import LoginForm
 from django.contrib.auth import login
 
-from django.views.generic import ListView
-from models import Word
+from django.views.generic import ListView, CreateView
+from models import Word, Translation
 
 def index_view(request):
     return render(request, 'manozodynas/index.html', {})
@@ -24,7 +24,14 @@ def login_view(request):
     return render(request, 'manozodynas/login.html', {'form':form})
 
 
+class CreateWord(CreateView):
+    model = Word
+    fields = ['word']
+
 class WordList(ListView):
     model = Word
     paginate_by = 10
+
+class WordView(ListView):
+    model = Translation
 
