@@ -2,6 +2,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from manozodynas.testutils import StatefulTesting
+from manozodynas.models import Word, Translation
 
 
 class IndexTestCase(StatefulTesting):
@@ -9,7 +10,31 @@ class IndexTestCase(StatefulTesting):
         self.open(reverse('index'))
         self.assertStatusCode(200)
 
+class CreateWordTest(StatefulTesting):
+    def test_word_create(self):
+        self.open(reverse('new_word'))
+        self.assertStatusCode(200)
+        all_words = Word.objects.all()
+        self.assertFalse(all_words.filter(word='testavimas').exists())
+        self.selectForm('#CreateWord')
+        self.submitForm({
+        'word': 'testavimas'
+        })
+        self.assertStatusCode(302)
+        self.assertTrue(all_words.filter(word='testavimas').exists())
 
+    def test_word_translation_create(self):
+        word = Word()
+        word.word = 'testas'
+        word.save()
+        self.open(reverse('word_view', args=(word.id, )))
+        self.assertStatusCode(200)
+        self.selectForm('#NewTranslation')
+        self.submitForm({
+            'translation': 'testavimas'
+        })
+        self.assertStatusCode(302)
+        self.assertTrue(Translation.objects.filter(translation='testavimas').exists())
 class LoginTestCase(StatefulTesting):
 
     fixtures = ['test_fixture.json']
