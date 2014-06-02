@@ -26,8 +26,18 @@ def login_view(request):
 def vote_view(request, id):
     translation = Translation.objects.get(id = id)
     translation.votes = translation.votes +1
-    translation.save()
     return HttpResponse("Sekmingai prabalsuota.")
+
+def vote_delete_view(request, id):
+    translation = Translation.objects.get(id = id)
+    translation.delete()
+    return HttpResponse("Vertimas sekmingai istrintas.")
+
+def word_delete_view(request, id):
+    word = Word.objects.get(id = id)
+    word.delete()
+    return HttpResponse("Zodis sekmingai istrintas.")
+
 class CreateWord(CreateView):
     model = Word
     fields = ['word']
