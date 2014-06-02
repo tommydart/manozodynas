@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.urlresolvers import reverse
 from .forms import LoginForm
 from django.contrib.auth import login
@@ -23,7 +23,11 @@ def login_view(request):
     #import ipdb; ipdb.set_trace()
     return render(request, 'manozodynas/login.html', {'form':form})
 
-
+def vote_view(request, id):
+    translation = Translation.objects.get(id = id)
+    translation.votes = translation.votes +1
+    translation.save()
+    return HttpResponse("Sekmingai prabalsuota.")
 class CreateWord(CreateView):
     model = Word
     fields = ['word']

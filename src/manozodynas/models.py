@@ -55,6 +55,7 @@ class Word(models.Model):
 class Translation(models.Model):
     word = models.ForeignKey('Word')
     translation = models.TextField()
+    votes = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.translation

@@ -6,7 +6,8 @@
 <br/><b>Vertimai:</b><br/>
 {% for translation in object_list %}
 <div>
-    {{translation.translation}}
+    {{translation.votes}} - {{translation.translation}}
+    <a href="{% url 'vote' translation.id %}">+1</a>
 </div>
 {% endfor %}
 
