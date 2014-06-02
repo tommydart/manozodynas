@@ -25,7 +25,8 @@ def login_view(request):
 
 def vote_view(request, id):
     translation = Translation.objects.get(id = id)
-    translation.votes = translation.votes +1
+    translation.votes = translation.votes + 1
+    translation.save()
     return HttpResponse("Sekmingai prabalsuota.")
 
 def vote_delete_view(request, id):
